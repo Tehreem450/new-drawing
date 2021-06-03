@@ -83,3 +83,40 @@ def button(color,rect):
         else:
             pg.draw.rect(overlay,color,(rect[0]+4,rect[1]+4,rect[2]-8,rect[3]-8))
             pg.draw.rect(overlay,black,(rect[0]+4,rect[1]+4,rect[2]-8,rect[3]-8),3)
+def drawline():
+    global startpoint,endpoint,start
+    if startpoint == None:
+        startpoint = x,y
+    endpoint = x,y
+    if r > 1:
+        if startpoint != endpoint:
+            dx,dy = endpoint[0]-startpoint[0],endpoint[1]-startpoint[1]
+            angle = math.atan2(-dy,dx)%(2*math.pi)
+            dx,dy = math.sin(angle)*(r*0.999),math.cos(angle)*(r*0.999)
+            a = startpoint[0]+dx,startpoint[1]+dy
+            b = startpoint[0]-dx,startpoint[1]-dy
+            c = endpoint[0]-dx,endpoint[1]-dy
+            d = endpoint[0]+dx,endpoint[1]+dy
+            pointlist = [a,b,c,d]
+            pg.draw.polygon(latest1,clr,pointlist)
+        pg.draw.circle(latest1,clr,(x,y),r)
+    else:
+        pg.draw.line(latest1,clr,startpoint,endpoint,r)
+    startpoint = x,y
+
+def shiftdown():
+    for layer in reversed(layers):
+        if layer == latest5:
+            canvas.blit(latest5,(0,0))
+        else:
+            layers[layers.index(layer)+1].blit(layer,(0,0))
+
+def shiftup():
+    for layer in layers:
+        if layer == latest5:
+            layer.fill(clear)
+        else:
+            layer.fill(clear)
+            layer.blit(layers[layers.index(layer)+1],(0,0))
+
+# Drawing static parts of overlay:

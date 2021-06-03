@@ -183,3 +183,46 @@ while True:
             if event.key == pg.K_y and undone > 0:
                 undone -= 1
                 dirtyrects.append(screenrect)
+# Painting:
+    if pg.mouse.get_pressed()[0] and screenrect.collidepoint(mousepos):
+        if not ongoing:
+            while undone > 0:
+                shiftup()
+                undone -= 1
+                maxundone -= 1
+            shiftdown()
+        drawline()
+        ongoing = True
+    else:
+        startpoint = None
+        if ongoing:
+            if maxundone < 5:
+                maxundone += 1
+            ongoing = False
+
+    if screenrect in dirtyrects:
+
+        # Drawing canvas:
+        window.fill(white)
+        for layer in layers:
+            if layers.index(layer) == undone:
+                window.blit(pg.transform.smoothscale(layer,(screenrect[2],screenrect[3])),screenrect)
+
+        # Drawing overlay:
+        overlay.fill(clear)
+        if r > 1:
+            pg.gfxdraw.aacircle(overlay,mousepos[0],mousepos[1],int(r*screenres[0]/realres[0]),gray)
+    overlay.blit(overlaybg,screenrect)
+    for color in colors:
+        button(color,colors.index(color))
+    window.blit(overlay,screenrect)
+
+    pg.display.set_caption('Draw   |   FPS: ' + str(int(clock.get_fps())))
+    clock.tick(fps)
+
+    # Updating display:
+    if not updated:
+        pg.display.update()
+        updated = True
+    pg.display.update(dirtyrects)
+    dirtyrects.clear()

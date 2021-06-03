@@ -1,0 +1,41 @@
+import pygame as pg
+import pygame.gfxdraw
+import sys,os,math
+
+pg.init()
+pg.event.set_allowed([pg.QUIT,pg.MOUSEMOTION,pg.MOUSEBUTTONDOWN,pg.KEYDOWN])
+
+# Settings:
+clock = pygame.time.Clock()
+fps = 120
+font = pg.font.SysFont('consolas',20)
+screenres = (500,500)
+realres = (screenres[0]*1.2,screenres[1]*1.2)
+
+updated = False
+dirtyrects = []
+
+# Colors | R | G | B | A |
+clear =  (  0,  0,  0,  0)
+white =  (255,255,255)
+gray =   (150,150,150)
+black =  (  0,  0,  0)
+red =    (255,  0,  0)
+orange = (255,125,  0)
+yellow = (255,255,  0)
+green =  (  0,225,  0)
+blue =   (  0,  0,255)
+purple = (150,  0,150)
+
+colors = [black,white,red,orange,yellow,green,blue,purple]
+
+numkey = [
+    pg.K_1,
+    pg.K_2,
+    pg.K_3,
+    pg.K_4,
+    pg.K_5,
+    pg.K_6,
+    pg.K_7,
+    pg.K_8
+]

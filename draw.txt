@@ -39,3 +39,47 @@ numkey = [
     pg.K_7,
     pg.K_8
 ]
+
+
+# Surfaces:
+window = pg.display.set_mode(screenres,pg.DOUBLEBUF)
+window.fill(white)
+canvas = pg.Surface((realres[0],realres[1]*0.84)).convert_alpha()
+canvas.fill(white)
+latest1 = canvas.copy()
+latest2 = canvas.copy()
+latest3 = canvas.copy()
+latest4 = canvas.copy()
+latest5 = canvas.copy()
+layers = [latest1,latest2,latest3,latest4,latest5]
+for layer in layers:
+    layer.fill(clear)
+overlay = pg.Surface(screenres).convert_alpha()
+
+# Rects:
+realrect = pg.Rect(0,0,realres[0],int(realres[1]*0.84))
+screenrect = pg.Rect(0,0,screenres[0],int(screenres[1]*0.84))
+toolbar = pg.Rect(0,420,500,80)
+
+r = 25
+clr = black
+startpoint = None
+endpoint = None
+ongoing = False
+undone = 0
+maxundone = 0
+holdingclick = False
+
+def button(color,rect):
+    global clr,holdingclick
+    if 0 <= rect <= 9:
+        rect = pg.Rect(48*rect+12,446,44,44)
+        if pg.mouse.get_pressed()[0] and rect.collidepoint(mousepos) and not holdingclick:
+            clr = color
+            dirtyrects.append(toolbar)
+        if clr == color:
+            pg.draw.rect(overlay,color,rect)
+            pg.draw.rect(overlay,black,rect,3)
+        else:
+            pg.draw.rect(overlay,color,(rect[0]+4,rect[1]+4,rect[2]-8,rect[3]-8))
+            pg.draw.rect(overlay,black,(rect[0]+4,rect[1]+4,rect[2]-8,rect[3]-8),3)

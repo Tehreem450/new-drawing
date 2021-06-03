@@ -165,7 +165,7 @@ while True:
                 dirtyrects.append(toolbar)
 
             # Emptying canvas:
-            if event.key == pg.K_e:
+            if event.key == pg.K_c:
                 canvas.fill(white)
                 latest5.fill(clear)
                 latest4.fill(clear)

@@ -18,14 +18,14 @@ dirtyrects = []
 # Colors | R | G | B | A |
 clear =  (  0,  0,  0,  0)
 white =  (255,255,255)
-gray =   (150,150,150)
+gray =   (30,171,215)
 black =  (  0,  0,  0)
 red =    (255,  0,  0)
 orange = (255,125,  0)
 yellow = (255,255,  0)
-green =  (  0,225,  0)
+green =  (  241,179,164)
 blue =   (  0,  0,255)
-purple = (150,  0,150)
+purple = (183,246,175)
 
 colors = [black,white,red,orange,yellow,green,blue,purple]
 
@@ -132,7 +132,7 @@ for color in colors:
 overlaybg = overlay.copy()
 
 while True:
-    for event in pg.event.get():
+    for event in pg.event.get():    #to exit
         if event.type == pg.QUIT or pg.key.get_pressed()[pg.K_ESCAPE]:
             pg.quit()
             sys.exit()
@@ -165,7 +165,7 @@ while True:
                 dirtyrects.append(toolbar)
 
             # Emptying canvas:
-            if event.key == pg.K_e:
+            if event.key == pg.K_c:
                 canvas.fill(white)
                 latest5.fill(clear)
                 latest4.fill(clear)
@@ -217,7 +217,7 @@ while True:
         button(color,colors.index(color))
     window.blit(overlay,screenrect)
 
-    pg.display.set_caption('Draw   |   FPS: ' + str(int(clock.get_fps())))
+    pg.display.set_caption('Paint by Tahrim,Anzila   |   FPS: ' + str(int(clock.get_fps())))
     clock.tick(fps)
 
     # Updating display:
